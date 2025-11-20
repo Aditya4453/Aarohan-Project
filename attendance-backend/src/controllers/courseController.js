@@ -1,5 +1,5 @@
-const { getAllCourses, getCourseById, createCourse, updateCourse } = require('../models/queries');
-const { validateCourse } = require('../utils/validators');
+import { getAllCourses, getCourseById, createCourse, updateCourse } from '../models/queries.js';
+import { validateCourse } from '../utils/validators.js';
 
 // Get all courses
 const getAll = async (req, res, next) => {
@@ -124,7 +124,7 @@ const update = async (req, res, next) => {
   }
 };
 
-module.exports = {
+export {
   getAll,
   getById,
   create,

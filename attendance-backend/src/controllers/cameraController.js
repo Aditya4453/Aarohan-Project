@@ -1,4 +1,4 @@
-const { getAllCameras, getCamerasByClassroom, updateCameraStatus } = require('../models/queries');
+import { getAllCameras, getCamerasByClassroom, updateCameraStatus } from '../models/queries.js';
 
 // Get all cameras
 const getAll = async (req, res, next) => {
@@ -70,7 +70,7 @@ const updateStatus = async (req, res, next) => {
   }
 };
 
-module.exports = {
+export {
   getAll,
   getByClassroom,
   updateStatus

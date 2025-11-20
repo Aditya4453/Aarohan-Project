@@ -1,5 +1,7 @@
-const mysql = require('mysql2/promise');
-require('dotenv').config();
+import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Create connection pool
 const pool = mysql.createPool({
@@ -24,5 +26,5 @@ pool.getConnection()
     console.error('❌ Database connection error:', err.message);
   });
 
-module.exports = pool;
+export default pool;
 

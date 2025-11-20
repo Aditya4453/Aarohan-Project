@@ -115,7 +115,7 @@ const validateSession = (courseId, date, startTime, endTime) => {
   };
 };
 
-module.exports = {
+export {
   isValidEmail,
   isValidPassword,
   isValidRole,

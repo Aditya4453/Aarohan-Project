@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const { getUserById } = require('../models/queries');
+import jwt from 'jsonwebtoken';
+import { getUserById } from '../models/queries.js';
 
 // Verify JWT token
 const verifyToken = async (req, res, next) => {
@@ -92,7 +92,7 @@ const requireTeacher = requireRole('teacher', 'admin');
 // Optional: Check if user is admin
 const requireAdmin = requireRole('admin');
 
-module.exports = {
+export {
   verifyToken,
   requireRole,
   requireTeacher,

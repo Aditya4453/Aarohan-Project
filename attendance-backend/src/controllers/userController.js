@@ -1,4 +1,4 @@
-const { getUserById } = require('../models/queries');
+import { getUserById } from '../models/queries.js';
 
 // Get user profile
 const getProfile = async (req, res, next) => {
@@ -50,7 +50,7 @@ const updateProfile = async (req, res, next) => {
   }
 };
 
-module.exports = {
+export {
   getProfile,
   updateProfile
 };

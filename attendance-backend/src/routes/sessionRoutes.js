@@ -1,7 +1,8 @@
-const express = require('express');
+import express from 'express';
+import { getAll, getById, getByCourse, create } from '../controllers/sessionController.js';
+import { verifyToken, requireTeacher } from '../middleware/auth.js';
+
 const router = express.Router();
-const { getAll, getById, getByCourse, create } = require('../controllers/sessionController');
-const { verifyToken, requireTeacher } = require('../middleware/auth');
 
 // Protected routes
 router.get('/', verifyToken, getAll);
@@ -9,5 +10,5 @@ router.get('/:id', verifyToken, getById);
 router.get('/course/:courseId', verifyToken, getByCourse);
 router.post('/', verifyToken, requireTeacher, create);
 
-module.exports = router;
+export default router;
 

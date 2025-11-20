@@ -1,4 +1,4 @@
-const { getAllClassrooms, getClassroomById } = require('../models/queries');
+import { getAllClassrooms, getClassroomById } from '../models/queries.js';
 
 // Get all classrooms
 const getAll = async (req, res, next) => {
@@ -37,7 +37,7 @@ const getById = async (req, res, next) => {
   }
 };
 
-module.exports = {
+export {
   getAll,
   getById
 };
