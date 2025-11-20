@@ -15,7 +15,16 @@ import {
 // =====================
 export const signup = async (req, res, next) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role } = req.body || {};
+
+    // Sanitize inputs
+    const cleanedName = name?.trim();
+    const cleanedEmail = email?.trim().toLowerCase();
+    const cleanedPassword = password?.trim();
+    const cleanedRole = role?.trim().toLowerCase();
+
+    console.log('[SIGNUP] Raw email:', email, 'Cleaned email:', cleanedEmail);
+    console.log('[SIGNUP] Raw role:', role, 'Cleaned role:', cleanedRole);
 
     if (!req.body) {
       return res.status(400).json({
@@ -25,7 +34,7 @@ export const signup = async (req, res, next) => {
     }
 
     // Validate input
-    const validation = validateSignup(name, email, password, role);
+    const validation = validateSignup(cleanedName, cleanedEmail, cleanedPassword, cleanedRole);
     if (!validation.isValid) {
       return res.status(400).json({
         success: false,
@@ -35,7 +44,7 @@ export const signup = async (req, res, next) => {
     }
 
     // Check existing user
-    const existingUser = await getUserByEmail(email);
+    const existingUser = await getUserByEmail(cleanedEmail);
     if (existingUser) {
       return res.status(409).json({
         success: false,
@@ -44,10 +53,10 @@ export const signup = async (req, res, next) => {
     }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(cleanedPassword, 10);
 
     // Create user
-    const userId = await createUser(name, email, hashedPassword, role);
+    const userId = await createUser(cleanedName, cleanedEmail, hashedPassword, cleanedRole);
     const user = await getUserById(userId);
 
     // Generate token
@@ -80,10 +89,17 @@ export const login = async (req, res, next) => {
       });
     }
 
-    const { email, password } = req.body;
+    const { email, password } = req.body || {};
+
+    // Sanitize inputs
+    const cleanedEmail = email?.trim().toLowerCase();
+    const cleanedPassword = password?.trim();
+
+    console.log('[LOGIN] Raw email:', email, 'Cleaned email:', cleanedEmail);
+    console.log('[LOGIN] Raw password length:', password?.length, 'Cleaned length:', cleanedPassword?.length);
 
     // Validate input
-    const validation = validateLogin(email, password);
+    const validation = validateLogin(cleanedEmail, cleanedPassword);
     if (!validation.isValid) {
       return res.status(400).json({
         success: false,
@@ -93,8 +109,9 @@ export const login = async (req, res, next) => {
     }
 
     // Fetch user by email
-    const user = await getUserByEmail(email);
+    const user = await getUserByEmail(cleanedEmail);
     if (!user) {
+      console.log(`Login failed: User not found for cleaned email ${cleanedEmail}`);
       return res.status(401).json({
         success: false,
         message: "Invalid email or password"
@@ -102,8 +119,9 @@ export const login = async (req, res, next) => {
     }
 
     // Validate password
-    const isPassMatch = await bcrypt.compare(password, user.password);
+    const isPassMatch = await bcrypt.compare(cleanedPassword, user.password);
     if (!isPassMatch) {
+      console.log(`Login failed: Password mismatch for cleaned email ${cleanedEmail}`);
       return res.status(401).json({
         success: false,
         message: "Invalid email or password"
