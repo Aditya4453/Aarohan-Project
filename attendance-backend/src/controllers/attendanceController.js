@@ -1,4 +1,4 @@
-const { markAttendance, getAttendanceBySession, getAttendanceByStudent, getBulkAttendance } = require('../models/queries');
+import { markAttendance, getAttendanceBySession, getAttendanceByStudent, getBulkAttendance } from '../models/queries.js';
 
 // Mark attendance
 const mark = async (req, res, next) => {
@@ -100,7 +100,7 @@ const getBulk = async (req, res, next) => {
   }
 };
 
-module.exports = {
+export {
   mark,
   getBySession,
   getByStudent,

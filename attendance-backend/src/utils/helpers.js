@@ -72,7 +72,7 @@ const formatResponse = (data, message = 'Success', success = true) => {
   };
 };
 
-module.exports = {
+export {
   formatDate,
   formatTime,
   getCurrentDate,

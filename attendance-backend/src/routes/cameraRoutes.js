@@ -1,12 +1,13 @@
-const express = require('express');
+import express from 'express';
+import { getAll, getByClassroom, updateStatus } from '../controllers/cameraController.js';
+import { verifyToken, requireTeacher } from '../middleware/auth.js';
+
 const router = express.Router();
-const { getAll, getByClassroom, updateStatus } = require('../controllers/cameraController');
-const { verifyToken, requireTeacher } = require('../middleware/auth');
 
 // Protected routes
 router.get('/', verifyToken, getAll);
 router.get('/classroom/:classroomId', verifyToken, getByClassroom);
 router.put('/:id/status', verifyToken, requireTeacher, updateStatus);
 
-module.exports = router;
+export default router;
 

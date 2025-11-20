@@ -1,4 +1,4 @@
-const pool = require('../config/database');
+import pool from '../config/database.js';
 
 // ==================== user ====================
 const createUser = async (name, email, hashedPassword, role) => {
@@ -307,7 +307,7 @@ const getClassroomById = async (id) => {
   return rows[0];
 };
 
-module.exports = {
+export {
   // user
   createUser,
   getUserByEmail,

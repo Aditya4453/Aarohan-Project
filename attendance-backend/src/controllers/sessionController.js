@@ -1,5 +1,5 @@
-const { getAllSessions, getSessionById, getSessionsByCourse, createSession } = require('../models/queries');
-const { validateSession } = require('../utils/validators');
+import { getAllSessions, getSessionById, getSessionsByCourse, createSession } from '../models/queries.js';
+import { validateSession } from '../utils/validators.js';
 
 // Get all sessions
 const getAll = async (req, res, next) => {
@@ -93,7 +93,7 @@ const create = async (req, res, next) => {
   }
 };
 
-module.exports = {
+export {
   getAll,
   getById,
   getByCourse,
